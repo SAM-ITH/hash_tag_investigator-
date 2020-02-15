@@ -1,0 +1,2 @@
+// CSV import script
+mongoimport -d hash_tag_investor -c World_Cup --type csv --file ..\World_Cup.csv --headerline

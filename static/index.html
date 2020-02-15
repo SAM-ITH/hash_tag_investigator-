@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html ng-app="hash-tag-investor">
+<head>
+    <meta charset="UTF-8"/>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"/>
+    <title>HashTag - Investor</title>
+    <!-- Favicon-->
+    <link rel="icon" href="static/assets/images/logo.png" type="image/png"/>
+    <link href="https://fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet"/>
+
+    <!-- Plugin CSS -->
+    <link rel="stylesheet" href="static/assets/bower_components/bootstrap/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="static/assets/bower_components/font-awesome/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="static/assets/css/main.css"/>
+    <link rel="stylesheet" href="static/assets/bower_components/animate.css/animate.min.css"/>
+    <link rel="stylesheet" href="static/assets/bower_components/AmaranJS/dist/css/amaran.min.css"/>
+
+    <!-- Plugins -->
+    <script src="static/assets/bower_components/angular/angular.min.js"></script>
+    <script src="static/assets/bower_components/angular-route/angular-route.min.js"></script>
+    <script src="static/assets/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="static/assets/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="static/assets/bower_components/angular-sessionstorage/angular-sessionstorage.js"></script>
+    <script src="static/assets/bower_components/lodash/dist/lodash.min.js"></script>
+    <script src="static/assets/bower_components/particles.js/particles.min.js"></script>
+    <script src="static/assets/bower_components/zingchart/client/zingchart.min.js"></script>
+    <script src="static/assets/bower_components/ngmap/build/scripts/ng-map.min.js"></script>
+    <script src="static/assets/bower_components/AmaranJS/dist/js/jquery.amaran.js"></script>
+    <script src="http://maps.google.com/maps/api/js?key=AIzaSyBuk-ti3rDbCHi39wY8mnFokbvm_QWXBpg"></script>
+
+    <!-- Local Scripts -->
+    <script src="static/app.js"></script>
+    <script src="static/route.js"></script>
+
+    <!-- Controllers -->
+    <script src="static/views/navbar/navbar-controller.js"></script>
+    <script src="static/views/login/login-controller.js"></script>
+    <script src="static/views/dashboard/dashboard-controller.js"></script>
+    <script src="static/views/analyze-tweets/analyze-tweets-controller.js"></script>
+    <script src="static/views/time-evaluation/time-evaluation-controller.js"></script>
+    <script src="static/views/topic-analysis/topic-analysis-controller.js"></script>
+    <script src="static/views/event-analysis/event-analysis-controller.js"></script>
+
+</head>
+<body>
+
+<div id="particles-js"></div>
+
+<div ng-include="'static/views/navbar/navbar.html'"></div>
+<div ng-view></div>
+
+</body>
+</html>

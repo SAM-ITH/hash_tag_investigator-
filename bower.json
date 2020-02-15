@@ -1,0 +1,30 @@
+{
+  "name": "HashTag - Investor",
+  "homepage": "https://github.com/Bmax-Tech/hash-tag-investor",
+  "authors": [
+    "HashTag - Investor"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "^1.6.4",
+    "angular-route": "^1.6.4",
+    "font-awesome": "^4.7.0",
+    "bootstrap": "^3.3.7",
+    "angular-sessionstorage": "^1.1.5",
+    "lodash": "^4.17.4",
+    "animate.css": "^3.5.2",
+    "particles.js": "^2.0.0",
+    "ngmap": "^1.18.4",
+    "zingchart": "^2.6.0",
+    "AmaranJS": "amaranjs#^0.5.4"
+  }
+}

@@ -1,0 +1,216 @@
+<div class="analyze-tweets-container" ng-controller="EventAnalysisController" ng-init="__init__()">
+    <div class="back-btn animated fadeInLeft">
+        <button class="btn btn-default" type="button" ng-click="backToHome()">
+            <i class="fa fa-angle-left" aria-hidden="true"></i>
+        </button>
+    </div>
+    <div class="container">
+        <div class="col-lg-12 analyze-tweets-panel animated zoomIn">
+            <div class="title-con"><h2 class="section-title"><i class="fa fa-calendar-o" aria-hidden="true"></i>&nbsp;&nbsp;Event
+                Analysis</h2></div>
+            <div class="col-lg-9">
+                <div class="input-group user-input-fields">
+                <span class="input-group-addon input-icon-group" id="basic-addon1">
+                    <i class="fa fa-hashtag" aria-hidden="true"></i>
+                </span>
+                    <input type="text" class="form-control user-input-group"
+                           placeholder="Enter event you want to search"
+                           aria-describedby="basic-addon1" ng-model="request.topic">
+                </div>
+            </div>
+            <!--<div class="col-lg-3">-->
+            <!--<div class="input-group user-select-fields">-->
+            <!--<select class="uk-select lng-select" ng-model="request.count"-->
+            <!--ng-options="quantity.title for quantity in quantities"></select>-->
+            <!--</div>-->
+            <!--</div>-->
+            <div class="col-lg-3">
+                <button type="button" ng-click="analyze()" class="btn btn-default user-input-group-button">Analyze
+                </button>
+            </div>
+        </div>
+        <div class="col-lg-12 loading-spinner-container animated flipInX" ng-show="show_loading">
+            <div class="progress">
+                <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="100"
+                     aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                    <span class="sr-only">100% Complete</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12 analyze-tweets-panel animated slideInUp" ng-show="show_results">
+            <div class="col-lg-12">
+                <div id="chart_1" class="chart_event_analysis"></div>
+            </div>
+        </div>
+        <div class="col-lg-12 analyze-tweets-panel animated slideInUp" ng-show="show_results">
+            <div class="col-lg-6">
+                <div id="chart_2" class="chart_event_analysis"></div>
+            </div>
+            <div class="col-lg-6">
+                <div id="chart_3" class="chart_event_analysis"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Analyze User Profile -->
+    <div class="container" style="margin-top: 80px;">
+        <div class="col-lg-12 analyze-tweets-panel animated zoomIn">
+            <div class="title-con"><h2 class="section-title"><i class="fa fa-user-circle-o" aria-hidden="true"></i>&nbsp;&nbsp;User
+                Account Analysis</h2></div>
+            <div class="col-lg-9">
+                <div class="input-group user-input-fields">
+                <span class="input-group-addon input-icon-group" id="basic-addon2">
+                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                </span>
+                    <input type="text" class="form-control user-input-group"
+                           placeholder="Enter user`s name to search"
+                           aria-describedby="basic-addon1" ng-model="account_request.user">
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <button type="button" ng-click="analyzeAccount()" class="btn btn-default user-input-group-button">
+                    Analyze
+                </button>
+            </div>
+        </div>
+        <div class="col-lg-12 loading-spinner-container animated flipInX" ng-show="show_account_loading">
+            <div class="progress">
+                <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="100"
+                     aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                    <span class="sr-only">100% Complete</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12 loading-spinner-container animated slideInUp" style="margin-bottom: 50px"
+             ng-show="show_account_results">
+            <div>
+                <h3 style="color: #FFF;margin-top: 0px;margin-bottom: 30px;margin-left: 10px;">
+                    "{{account_request.user}}" : Search
+                    Results </h3>
+                <div class="col-lg-12" style="padding: 0px">
+                    <div class="col-lg-4" style="padding: 0px 10px;margin-bottom: 15px"
+                         ng-repeat="user in searched_users">
+                        <div class="col-lg-12 tweet-card" ng-click="user_on_click(user)">
+                            <div class="col-lg-4 tweet-profile-image"><img src="{{user.profile_image_url}}"></div>
+                            <div class="col-lg-8" style="padding-left: 10px">
+                                {{user.screen_name}}
+                                <p>created on : {{parseDate(user.created_at) | date:'yyyy-MM-dd HH:mm'}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- User Profile Model -->
+    <div class="modal fade" id="user_model" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">{{selected_user.name}}</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row" style="padding: 0px">
+                        <div class="col-lg-3" style="padding-right: 0px;">
+                            <img style="width: 100%" src="{{selected_user.profile_image_url}}">
+                        </div>
+                        <div class="col-lg-9">
+                            <p style="font-weight: 600">About</p>
+                            <p>{{selected_user.description}}</p>
+                        </div>
+                        <div class="col-lg-12" style="margin-top: 20px">
+                            <p style="font-weight: 600">Stats</p>
+                            <table width="100%">
+                                <tbody>
+                                <tr>
+                                    <td width="25%">
+                                        Followers :
+                                    </td>
+                                    <td width="25%">
+                                        <span style="font-size: 11px;" class="label label-primary">{{selected_user.followers_count}}</span>
+                                    </td>
+                                    <td width="25%">
+                                        Likes :
+                                    </td>
+                                    <td width="25%">
+                                        <span style="font-size: 11px;" class="label label-primary">{{selected_user.favourites_count}}</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4" height="10px"></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Friends :
+                                    </td>
+                                    <td>
+                                        <span style="font-size: 11px;" class="label label-primary">{{selected_user.friends_count}}</span>
+                                    </td>
+                                    <td>
+                                        Location :
+                                    </td>
+                                    <td>
+                                        {{selected_user.location}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4" height="10px"></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Total Tweets :
+                                    </td>
+                                    <td>
+                                        <span style="font-size: 11px;" class="label label-warning">{{selected_user.statuses_count}}</span>
+                                    </td>
+                                    <td colspan="2"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row" style="padding: 0px" ng-show="show_analyzed_profile_loading">
+                        <div class="col-lg-12" style="padding: 35px 25px 0px 25px;">
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-striped active" role="progressbar"
+                                     aria-valuenow="100"
+                                     aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                                    <span class="sr-only">100% Complete</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="padding: 0px" ng-show="show_analyzed_profile">
+                        <div class="col-lg-12">
+                            <h4 style="font-weight: 600;margin-top: 20px;">Recent Tweets</h4>
+                            <div class="col-lg-12 scroll-pain">
+                                <div class="col-lg-12 recent_tweet" ng-repeat="tweet in recent_tweets">
+                                    <p>{{tweet.text}}</p>
+                                    <p style="color: #5e5e5e">created on : {{parseDate(tweet.created_at) |
+                                        date:'yyyy-MM-dd HH:mm'}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="padding: 0px" ng-show="show_analyzed_hash_tags">
+                        <div class="col-lg-12">
+                            <h4 style="font-weight: 600;margin-top: 30px;">Recent Top Hashtags</h4>
+                            <div class="col-lg-12" style="padding: 0px">
+                                <span class="label label-success hash_tag"
+                                      ng-repeat="hash_tag in recent_hash_tags">{{hash_tag}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" ng-click="userProfileAnalysis()">Analyze Account
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
